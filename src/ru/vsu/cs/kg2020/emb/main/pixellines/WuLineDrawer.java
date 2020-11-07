@@ -32,19 +32,26 @@ public class WuLineDrawer implements LineDrawer {
                 for (int i = x1; i < x2; i++) {
                     pd.drawPixel(i, y1, color);
                 }
-            }
-            gradient = (double) dy / dx;
-            double intery = y1 + gradient;
-            pd.drawPixel(x1, y1, color);
-            for (int x = x1; x < x2; ++x) {
-                pd.drawPixel(
-                        x, (int) intery,
-                        new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (255 - fractionalPart(intery) * 255))
-                );
-                pd.drawPixel(x, (int) intery + 1,
-                        new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (fractionalPart(intery) * 255))
-                );
-                intery += gradient;
+            } else {
+                gradient = (double) dy / dx;
+                double intery = y1 + gradient;
+                for (int x = x1; x < x2; x++) {
+                    pd.drawPixel(
+                            x, (int) intery,
+                            new Color(
+                                    color.getRed(), color.getGreen(), color.getBlue(),
+                                    (int) (255 - fractionalPart(intery) * 255)
+                            )
+                    );
+                    pd.drawPixel(
+                            x, (int) intery + 1,
+                            new Color(
+                                    color.getRed(), color.getGreen(), color.getBlue(),
+                                    (int) (fractionalPart(intery) * 255)
+                            )
+                    );
+                    intery += gradient;
+                }
             }
         } else {
             if (y2 < y1) {
@@ -59,23 +66,21 @@ public class WuLineDrawer implements LineDrawer {
                 for (int i = y1; i < y2; i++) {
                     pd.drawPixel(x1, i, color);
                 }
+            } else {
+                gradient = (double) dx / dy;
+                double interx = x1 + gradient;
+                for (int y = y1; y < y2; ++y) {
+                    pd.drawPixel(
+                            (int) interx, y,
+                            new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (255 - fractionalPart(interx) * 255))
+                    );
+                    pd.drawPixel((int) interx + 1, y,
+                            new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (fractionalPart(interx) * 255))
+                    );
+                    interx += gradient;
+                }
             }
-            gradient = (double) dx / dy;
-            double interx = x1 + gradient;
-            pd.drawPixel(x1, y1, color);
-            for (int y = y1; y < y2; ++y) {
-                pd.drawPixel(
-                        (int) interx, y,
-                        new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (255 - fractionalPart(interx) * 255))
-                );
-                pd.drawPixel((int) interx + 1, y,
-                        new Color(color.getRed(), color.getGreen(), color.getBlue(), (int) (fractionalPart(interx) * 255))
-                );
-                interx += gradient;
-            }
-
         }
-        pd.drawPixel(x2, y2, color);
 
     }
 

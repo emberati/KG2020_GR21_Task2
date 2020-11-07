@@ -36,12 +36,12 @@ public class BresenhamLineDrawer implements LineDrawer {
 
             e2 = 2 * err;
             if (e2 > -dy) {
-                err = err - dy;
+                err -= dy;
                 x1 += sx;
             }
 
             if (e2 < dx) {
-                err = err + dx;
+                err += dx;
                 y1 += sy;
             }
         }

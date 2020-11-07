@@ -20,7 +20,7 @@ public class DDALineDrawer implements LineDrawer {
         double dy = y2 - y1;
         final double K;
 
-        if (Math.abs(dx) > Math.abs(dy)) {
+        if (Math.abs(dx) >= Math.abs(dy)) {
             K = dy / dx;
             if (x1 > x2) {
                 int tmp = x1;
@@ -28,7 +28,7 @@ public class DDALineDrawer implements LineDrawer {
                 x2 = tmp;
                 y1 = y2;
             }
-            for (int j = x1; j <= x2; j++) {
+            for (int j = x1; j < x2; j++) {
                 double i = K * (j - x1) + y1;
                 pd.drawPixel(j, (int) i, color);
             }
@@ -40,19 +40,11 @@ public class DDALineDrawer implements LineDrawer {
                 y1 = y2;
                 y2 = tmp;
             }
-            for (int i = y1; i <= y2; i++) {
+            for (int i = y1; i < y2; i++) {
                 double j = K * (i - y1) + x1;
                 pd.drawPixel((int) j, i, color);
             }
         }
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     @Override
